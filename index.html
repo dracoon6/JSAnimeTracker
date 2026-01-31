@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Tracker - Home</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/home.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">📺 Anime Tracker</div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="collection.html">Collection</a></li>
+                <li><a href="search.html">Search</a></li>
+                <li><a href="add.html">Add Title</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Welcome to Your Anime Collection</h1>
+            <p>Track your favorite series and discover new ones</p>
+            <a href="collection.html" class="cta-button">View My Collection</a>
+        </div>
+    </section>
+
+    <!-- Stats Overview Section -->
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3>Total Titles</h3>
+                <p class="stat-number" id="totalTitles">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Currently Watching</h3>
+                <p class="stat-number" id="watching">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Completed</h3>
+                <p class="stat-number" id="completed">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Last Added</h3>
+                <p class="stat-text" id="lastAdded">None</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Spotlight Section -->
+    <section class="spotlight-section">
+        <h2>Your Top Rated Anime</h2>
+        <div class="spotlight-card" id="spotlightCard">
+            <div class="spotlight-loading">Loading your top rated anime...</div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2026 Anime Tracker. Built with ❤️ for anime fans.</p>
+    </footer>
+
+    <script src="js/storage.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>

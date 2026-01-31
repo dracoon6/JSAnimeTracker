@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search & Discover - Anime Tracker</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/search.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">📺 Anime Tracker</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="collection.html">Collection</a></li>
+                <li><a href="search.html" class="active">Search</a></li>
+                <li><a href="add.html">Add Title</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="search-container">
+        <h1>Search & Discover</h1>
+        
+        <div class="search-section">
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Search anime or manga..."
+                    autocomplete="off"
+                >
+                <span class="search-icon">🔍</span>
+            </div>
+
+            <div class="search-filters">
+                <button class="category-btn active" data-category="anime">Anime</button>
+                <button class="category-btn" data-category="manga">Manga</button>
+            </div>
+        </div>
+
+        <div class="search-results" id="searchResults">
+            <p class="results-placeholder">Start typing to search for anime or manga...</p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Anime Tracker. Built with ❤️ for anime fans.</p>
+    </footer>
+
+    <script src="js/search.js"></script>
+</body>
+</html>

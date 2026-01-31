@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Title - Anime Tracker</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/add.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">📺 Anime Tracker</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="collection.html">Collection</a></li>
+                <li><a href="search.html">Search</a></li>
+                <li><a href="add.html" class="active">Add Title</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="add-container">
+        <h1>Add a New Title</h1>
+        
+        <form class="add-form" id="addForm">
+            <div class="form-group">
+                <label for="title">Title (English)</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="type">Type</label>
+                    <select id="type" name="type" required>
+                        <option value="">Select Type</option>
+                        <option value="TV">TV</option>
+                        <option value="Movie">Movie</option>
+                        <option value="Manga">Manga</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status" name="status" required>
+                        <option value="">Select Status</option>
+                        <option value="Plan to Watch">Plan to Watch</option>
+                        <option value="Watching">Watching</option>
+                        <option value="Completed">Completed</option>
+                        <option value="On Hold">On Hold</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="episodes">Episodes</label>
+                    <input type="number" id="episodes" name="episodes" min="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="score">Score (1-10)</label>
+                    <input type="number" id="score" name="score" min="1" max="10" step="0.1">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="synopsis">Synopsis</label>
+                <textarea id="synopsis" name="synopsis" rows="4"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="imageUrl">Image URL</label>
+                <input type="url" id="imageUrl" name="imageUrl">
+            </div>
+
+            <button type="submit" class="submit-btn">Add to Collection</button>
+        </form>
+
+        <div class="result-section" id="resultSection" style="display: none;">
+            <h2>✓ Successfully Added!</h2>
+            <div class="result-card" id="resultCard"></div>
+            <a href="collection.html" class="btn-primary">Back to Collection</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Anime Tracker. Built with ❤️ for anime fans.</p>
+    </footer>
+
+    <script src="js/storage.js"></script>
+    <script src="js/add.js"></script>
+</body>
+</html>
