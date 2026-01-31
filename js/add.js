@@ -36,9 +36,9 @@ function loadPrefilledData() {
 function setupFormSubmission() {
     const form = document.getElementById('addForm');
     
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        submitForm();
+        await submitForm();
     });
 }
 
@@ -47,7 +47,34 @@ function setupFormSubmission() {
  * Displays confirmation result and scrolls to it
  * Throws informative error if validation fails
  */
-function submitForm() {
+/**
+ * Query Jikan API for anime information based on title.
+ * Returns null if no useful data is found.
+ * @param {string} title
+ * @returns {Promise<Object|null>} { imageUrl, synopsis, episodes, type, studio }
+ */
+async function fetchJikanAnime(title) {
+    try {
+        const endpoint = `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(title)}&limit=1`;
+        const response = await fetch(endpoint);
+        if (!response.ok) return null;
+        const json = await response.json();
+        const item = json.data && json.data[0];
+        if (!item) return null;
+        return {
+            imageUrl: item.images?.jpg?.image_url || null,
+            synopsis: item.synopsis || null,
+            episodes: item.episodes || null,
+            type: item.type || null,
+            studio: item.studios && item.studios[0] ? item.studios[0].name : null
+        };
+    } catch (error) {
+        console.warn('Jikan lookup failed:', error);
+        return null;
+    }
+}
+
+async function submitForm() {
     const formData = {
         title: document.getElementById('title').value,
         type: document.getElementById('type').value,
@@ -65,6 +92,23 @@ function submitForm() {
         return;
     }
     
+    // Try to enrich missing data from Jikan API when possible
+    try {
+        const needsEnrich = !formData.imageUrl || !formData.synopsis || !formData.episodes || formData.studio === 'Unknown';
+        if (needsEnrich) {
+            const info = await fetchJikanAnime(formData.title);
+            if (info) {
+                formData.imageUrl = formData.imageUrl || info.imageUrl || formData.imageUrl;
+                formData.synopsis = formData.synopsis || info.synopsis || formData.synopsis;
+                formData.episodes = formData.episodes || info.episodes || formData.episodes;
+                formData.type = formData.type || info.type || formData.type;
+                formData.studio = formData.studio === 'Unknown' ? (info.studio || 'Unknown') : formData.studio;
+            }
+        }
+    } catch (err) {
+        console.warn('Enrichment failed, proceeding with provided data', err);
+    }
+
     // Add to collection
     submittedData = StorageManager.addToCollection(formData);
     

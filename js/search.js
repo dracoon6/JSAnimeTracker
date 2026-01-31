@@ -67,8 +67,8 @@ function setupCategoryFilters() {
 async function performSearch(query) {
     try {
         const endpoint = currentCategory === 'anime' 
-            ? `https://api.jikan.moe/v4/anime?query=${encodeURIComponent(query)}&limit=12`
-            : `https://api.jikan.moe/v4/manga?query=${encodeURIComponent(query)}&limit=12`;
+            ? `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(query)}&limit=12`
+            : `https://api.jikan.moe/v4/manga?q=${encodeURIComponent(query)}&limit=12`;
         
         const response = await fetch(endpoint);
         
@@ -103,12 +103,12 @@ function displaySearchResults(results) {
     
     resultsContainer.innerHTML = results.map(item => {
         const title = item.title || item.title_english || 'Unknown';
-        const image = item.images?.jpg?.image_url || 'https://via.placeholder.com/180x250?text=No+Image';
+        const image = item.images?.jpg?.image_url || 'data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'180\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%23ddd\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'12\' fill=\'%23666\'>No Image</text></svg>';
         const type = item.type || currentCategory.toUpperCase();
         
         return `
             <div class="search-result-card" onclick="addSearchResultToCollection('${title.replace(/'/g, "\\'")}', '${type}', '${image.replace(/'/g, "\\'")}')">
-                <img src="${image}" alt="${title}" class="search-result-image" onerror="this.src='https://via.placeholder.com/180x250?text=Error'">
+                <img src="${image}" alt="${title}" class="search-result-image" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'180\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%23f8d7da\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'12\' fill=\'%23722\'>Image+Error</text></svg>'">
                 <div class="search-result-content">
                     <div class="search-result-title">${title}</div>
                     <div class="search-result-type">${type}</div>

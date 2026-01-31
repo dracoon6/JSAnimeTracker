@@ -1,195 +1,106 @@
 // Data Initialization Script
-// Provides sample anime data and helper functions for testing and initialization
-// Call initializeCollection() in browser console to populate with 15 sample anime titles
+// Provides sample anime titles and helper functions for testing and initialization
+// Call initializeCollectionFromJikan() in browser console to populate with enriched sample data
 
 const SAMPLE_ANIME = [
-  {
-    title: "Attack on Titan",
-    type: "TV",
-    status: "Completed",
-    episodes: 139,
-    score: 9,
-    synopsis: "After his hometown is destroyed and his mother is killed, young Eren Yeager vows to cleanse the earth of the giant humanoid Titans that have brought humanity to the brink of extinction.",
-    studio: "Wit Studio",
-    imageUrl: "https://cdn.myanimelist.net/images/anime/10/47347.jpg"
-  },
-  {
-    title: "Death Note",
-    type: "TV",
-    status: "Completed",
-    episodes: 37,
-    score: 8.5,
-    synopsis: "An intelligent high schooler discovers a supernatural notebook that allows him to kill anyone by writing their name, and uses it to pursue his god-like plans.",
-    studio: "Madhouse",
-    imageUrl: "https://cdn.myanimelist.net/images/anime/9/9453.jpg"
-  },
-  {
-    title: "Demon Slayer",
-    type: "TV",
-    status: "Watching",
-    episodes: 55,
-    score: 8.7,
-    synopsis: "A young demon slayer embarks on a quest to save his sister, who has been transformed into a demon, and to defeat the demon lord Muzan.",
-    studio: "ufotable",
-    imageUrl: "https://cdn.myanimelist.net/images/anime/1/43584.jpg"
-  },
-  {
-    title: "Jujutsu Kaisen",
-    type: "TV",
-    status: "Watching",
-    episodes: 50,
-    score: 8.5,
-    synopsis: "A high schooler swallows a cursed finger and joins a secret organization of Jujutsu sorcerers to fight curse users and find the other 19 fingers of a powerful demon.",
-    studio: "MAPPA",
-    imageUrl: "https://cdn.myanimelist.net/images/anime/1/52715.jpg"
-  },
-  {
-    title: "Steins;Gate",
-    type: "TV",
-    status: "Completed",
-    episodes: 24,
-    score: 9,
-    synopsis: "A group of friends discover how to send messages to the past, which results in a dangerous journey through alternate timelines and a race against fate itself.",
-    studio: "White Fox",
-    imageUrl: "https://cdn.myanimelist.net/images/anime/5/30819.jpg"
-  },
-  {
-    title: "My Hero Academia",
-    type: "TV",
-    status: "Watching",
-    episodes: 130,
-    score: 7.9,
-    synopsis: "In a society where almost everyone has superpowers, a powerless boy dreams of becoming the greatest hero and enrolls in a hero academy.",
-    studio: "Bones",
-    imageUrl: "https://cdn.myanimelist.net/images/anime/10/75815.jpg"
-  },
-  {
-    title: "Tokyo Ghoul",
-    type: "TV",
-    status: "Completed",
-    episodes: 48,
-    score: 7.5,
-    synopsis: "After a deadly encounter with a ghoul, a teenager is transformed into a half-ghoul and must navigate a world of hidden monsters living in secret in Tokyo.",
-    studio: "Studio Pierrot",
-    imageUrl: "https://cdn.myanimelist.net/images/anime/2/33731.jpg"
-  },
-  {
-    title: "Fullmetal Alchemist: Brotherhood",
-    type: "TV",
-    status: "Completed",
-    episodes: 64,
-    score: 9.1,
-    synopsis: "Two brothers use alchemy to try to resurrect their dead mother, but the experiment goes horribly wrong and they spend years searching for a way to fix their mistakes.",
-    studio: "Bones",
-    imageUrl: "https://cdn.myanimelist.net/images/anime/1/29114.jpg"
-  },
-  {
-    title: "Ergo Proxy",
-    type: "TV",
-    status: "Plan to Watch",
-    episodes: 23,
-    score: 7.2,
-    synopsis: "In a post-apocalyptic world, a young Re-L explores dangerous ruins searching for the truth, accompanied by Proxy and a sentient AutoReiv.",
-    studio: "Manglobe",
-    imageUrl: "https://cdn.myanimelist.net/images/anime/13/20319.jpg"
-  },
-  {
-    title: "Vinland Saga",
-    type: "TV",
-    status: "Completed",
-    episodes: 24,
-    score: 8.9,
-    synopsis: "A young Viking warrior seeks revenge against the man who killed his father, but his journey takes him on a path toward something much greater.",
-    studio: "WIT Studio",
-    imageUrl: "https://cdn.myanimelist.net/images/anime/1/50271.jpg"
-  },
-  {
-    title: "Cowboy Bebop",
-    type: "TV",
-    status: "Completed",
-    episodes: 26,
-    score: 8.8,
-    synopsis: "A group of bounty hunters travel across space in their ship Bebop, taking on jobs and living a life of adventure and mystery.",
-    studio: "Sunrise",
-    imageUrl: "https://cdn.myanimelist.net/images/anime/4/19644.jpg"
-  },
-  {
-    title: "Neon Genesis Evangelion",
-    type: "TV",
-    status: "Completed",
-    episodes: 26,
-    score: 7.6,
-    synopsis: "Teenage pilots must operate giant robots called Evangelions to protect humanity from mysterious beings known as Angels.",
-    studio: "Gainax",
-    imageUrl: "https://cdn.myanimelist.net/images/anime/1/7711.jpg"
-  },
-  {
-    title: "Code Geass",
-    type: "TV",
-    status: "On Hold",
-    episodes: 50,
-    score: 7.8,
-    synopsis: "A young man gains the power to command anyone to obey him, and uses this ability in a rebellion against an oppressive empire.",
-    studio: "Sunrise",
-    imageUrl: "https://cdn.myanimelist.net/images/anime/1/13662.jpg"
-  },
-  {
-    title: "Spy × Family",
-    type: "TV",
-    status: "Watching",
-    episodes: 25,
-    score: 8.3,
-    synopsis: "A spy, an assassin, and a psychic girl with no connection form an unlikely family to infiltrate and survive high society.",
-    studio: "CloverWorks",
-    imageUrl: "https://cdn.myanimelist.net/images/anime/14/96303.jpg"
-  },
-  {
-    title: "Mob Psycho 100",
-    type: "TV",
-    status: "Completed",
-    episodes: 25,
-    score: 8.6,
-    synopsis: "A psychic middle schooler suppresses his powers to live a normal life, but keeps getting pulled into supernatural adventures.",
-    studio: "Bones",
-    imageUrl: "https://cdn.myanimelist.net/images/anime/5/87882.jpg"
-  }
+  "Attack on Titan",
+  "Death Note",
+  "Demon Slayer",
+  "Jujutsu Kaisen",
+  "Steins;Gate",
+  "My Hero Academia",
+  "Tokyo Ghoul",
+  "Fullmetal Alchemist: Brotherhood",
+  "Ergo Proxy",
+  "Vinland Saga",
+  "Cowboy Bebop",
+  "Neon Genesis Evangelion",
+  "Code Geass",
+  "Spy × Family",
+  "Mob Psycho 100"
 ];
 
 /**
- * Initialize collection with 15 sample anime titles
- * Populates localStorage with predefined anime data for testing
- * Call this function in browser console: initializeCollection()
- * @returns {boolean} True if initialization successful, false otherwise
+ * Fetch anime info from Jikan API by title (returns first match)
+ * @param {string} title
+ * @returns {Promise<Object|null>} { imageUrl, synopsis, episodes, type, studio, score }
  */
-function initializeCollection() {
+async function fetchJikanInfo(title) {
+  try {
+    const endpoint = `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(title)}&limit=1`;
+    const resp = await fetch(endpoint);
+    if (!resp.ok) return null;
+    const data = await resp.json();
+    const item = data.data && data.data[0];
+    if (!item) return null;
+    return {
+      imageUrl: item.images?.jpg?.image_url || null,
+      synopsis: item.synopsis || null,
+      episodes: item.episodes || null,
+      type: item.type || null,
+      studio: item.studios && item.studios[0] ? item.studios[0].name : null,
+      score: item.score || null
+    };
+  } catch (err) {
+    console.warn('Jikan fetch failed for', title, err);
+    return null;
+  }
+}
+
+/**
+ * Small delay to avoid hammering the API
+ */
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+/**
+ * Initialize collection by enriching SAMPLE_ANIME with data from Jikan API
+ * Call this in the console: initializeCollectionFromJikan()
+ * Returns true if successful, false otherwise
+ */
+async function initializeCollectionFromJikan() {
   try {
     const collection = [];
-    
-    SAMPLE_ANIME.forEach((anime, index) => {
+
+    for (let i = 0; i < SAMPLE_ANIME.length; i++) {
+      const anime = SAMPLE_ANIME[i];
+      // Be polite to the API
+      await sleep(350);
+      const title = typeof anime === 'string' ? anime : anime.title;
+      const base = (typeof anime === 'object' && anime) ? anime : {};
+      const info = await fetchJikanInfo(title);
+
       const item = {
-        id: Date.now().toString() + index,
-        ...anime,
+        id: Date.now().toString() + i,
+        title: title,
+        type: info?.type || base.type || null,
+        status: base.status || 'Plan to Watch',
+        episodes: info?.episodes || base.episodes || null,
+        score: info?.score || base.score || null,
+        synopsis: info?.synopsis || base.synopsis || '',
+        studio: info?.studio || base.studio || 'Unknown',
+        imageUrl: info?.imageUrl || base.imageUrl || null,
         dateAdded: new Date().toISOString()
       };
+
       collection.push(item);
-    });
-    
+    }
+
     localStorage.setItem('animeCollection', JSON.stringify(collection));
-    
-    // Set the last added to the last item
     localStorage.setItem('lastAddedTitle', JSON.stringify(collection[collection.length - 1]));
-    
-    console.log('✅ Collection initialized with 15 anime titles!');
+
+    console.log('✅ Collection initialized with enriched anime data (Jikan).');
     console.log('📊 Stats:');
     console.log('   Total titles:', collection.length);
     console.log('   Completed:', collection.filter(a => a.status === 'Completed').length);
     console.log('   Currently Watching:', collection.filter(a => a.status === 'Watching').length);
     console.log('   On Hold:', collection.filter(a => a.status === 'On Hold').length);
     console.log('   Plan to Watch:', collection.filter(a => a.status === 'Plan to Watch').length);
-    
+
     return true;
   } catch (error) {
-    console.error('❌ Error initializing collection:', error);
+    console.error('❌ Error initializing collection from Jikan:', error);
     return false;
   }
 }

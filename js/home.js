@@ -43,10 +43,10 @@ function loadSpotlight() {
         return;
     }
 
-    const imageUrl = topRated.imageUrl || 'https://via.placeholder.com/300x400?text=No+Image';
+    const imageUrl = topRated.imageUrl || 'data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'400\'><rect width=\'100%\' height=\'100%\' fill=\'%23ddd\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'16\' fill=\'%23666\'>No Image</text></svg>';
     
     spotlightCard.innerHTML = `
-        <img src="${imageUrl}" alt="${topRated.title}" class="spotlight-image" onerror="this.src='https://via.placeholder.com/300x400?text=Error'">
+        <img src="${imageUrl}" alt="${topRated.title}" class="spotlight-image" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'400\'><rect width=\'100%\' height=\'100%\' fill=\'%23f8d7da\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'16\' fill=\'%23722\'>Image+Error</text></svg>'">
         <div class="spotlight-info">
             <h3>${topRated.title}</h3>
             <p>${topRated.synopsis || 'No synopsis available.'}</p>

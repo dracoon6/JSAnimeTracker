@@ -38,8 +38,8 @@ function displayCollection(items) {
 
     grid.innerHTML = items.map(item => `
         <div class="anime-card" onclick="openModal(${JSON.stringify(item).replace(/"/g, '&quot;')})">
-            <img src="${item.imageUrl || 'https://via.placeholder.com/200x300?text=No+Image'}" 
-                 alt="${item.title}" class="anime-card-image" onerror="this.src='https://via.placeholder.com/200x300?text=Error'">
+            <img src="${item.imageUrl || 'data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'300\'><rect width=\'100%\' height=\'100%\' fill=\'%23ddd\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'14\' fill=\'%23666\'>No Image</text></svg>'}" 
+                 alt="${item.title}" class="anime-card-image" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'300\'><rect width=\'100%\' height=\'100%\' fill=\'%23f8d7da\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'14\' fill=\'%23722\'>Image+Error</text></svg>'">
             <div class="anime-card-content">
                 <div class="anime-card-title">${item.title}</div>
                 <span class="anime-card-type">${item.type}</span>
@@ -105,8 +105,8 @@ function setupModal() {
 function openModal(item) {
     const modal = document.getElementById('detailModal');
     
-    document.getElementById('modalImage').src = item.imageUrl || 'https://via.placeholder.com/300x400?text=No+Image';
-    document.getElementById('modalImage').onerror = function() { this.src = 'https://via.placeholder.com/300x400?text=Error'; };
+    document.getElementById('modalImage').src = item.imageUrl || 'data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'400\'><rect width=\'100%\' height=\'100%\' fill=\'%23ddd\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'16\' fill=\'%23666\'>No Image</text></svg>';
+    document.getElementById('modalImage').onerror = function() { this.onerror=null; this.src = 'data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'400\'><rect width=\'100%\' height=\'100%\' fill=\'%23f8d7da\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'16\' fill=\'%23722\'>Image+Error</text></svg>' };
     document.getElementById('modalTitle').textContent = item.title;
     document.getElementById('modalType').textContent = `Type: ${item.type}`;
     document.getElementById('modalStatus').textContent = `Status: ${item.status}`;
