@@ -7,7 +7,7 @@ The Anime Tracker is a web application designed to help users manage and discove
 My purpose for writing this software was to develop a comprehensive understanding of vanilla JavaScript fundamentals while building a practical, real-world application. Through this project, I focused on mastering DOM manipulation, asynchronous data fetching with Fetch API and async/await, effective use of array methods for data filtering and transformation, and designing responsive user interfaces without relying on external frameworks. This experience has solidified my foundational knowledge of JavaScript and prepared me for more advanced web development concepts.
 
 [Software Demo Video](https://youtube.com/your-video-link-here)
-
+[Website Link](https://dracoon6.github.io/JSAnimeTracker/index.html)
 # Development Environment
 
 I developed this software using Visual Studio Code as my primary code editor, with Git for version control throughout the development process. The project runs entirely in modern web browsers with no backend server required, making it lightweight and easy to deploy.
