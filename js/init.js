@@ -20,29 +20,58 @@ const SAMPLE_ANIME = [
   "Mob Psycho 100"
 ];
 
+// Additional sample manga titles (titles-only)
+const SAMPLE_MANGA = [
+  "One Piece",
+  "Berserk",
+  "Monster",
+  "Vagabond",
+  "20th Century Boys"
+];
+
 /**
- * Fetch anime info from Jikan API by title (returns first match)
+ * Fetch info from Jikan API by title and media type (anime|manga)
  * @param {string} title
- * @returns {Promise<Object|null>} { imageUrl, synopsis, episodes, type, studio, score }
+ * @param {string} mediaType - 'anime' or 'manga'
+ * @returns {Promise<Object|null>} { imageUrl, synopsis, episodes, chapters, type, studio, authors, score }
  */
-async function fetchJikanInfo(title) {
+async function fetchJikanInfo(title, mediaType = 'anime') {
   try {
-    const endpoint = `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(title)}&limit=1`;
+    const path = mediaType === 'manga' ? 'manga' : 'anime';
+    const endpoint = `https://api.jikan.moe/v4/${path}?q=${encodeURIComponent(title)}&limit=1`;
     const resp = await fetch(endpoint);
     if (!resp.ok) return null;
     const data = await resp.json();
     const item = data.data && data.data[0];
     if (!item) return null;
+
+    // Map common fields, with manga-specific fallbacks
+    const imageUrl = item.images?.jpg?.image_url || null;
+    const synopsis = item.synopsis || item.title || null;
+    const score = item.score || null;
+
+    if (mediaType === 'manga') {
+      return {
+        imageUrl,
+        synopsis,
+        chapters: item.chapters || null,
+        type: item.type || 'Manga',
+        authors: item.authors && item.authors[0] ? item.authors[0].name : null,
+        score
+      };
+    }
+
+    // anime
     return {
-      imageUrl: item.images?.jpg?.image_url || null,
-      synopsis: item.synopsis || null,
+      imageUrl,
+      synopsis,
       episodes: item.episodes || null,
       type: item.type || null,
       studio: item.studios && item.studios[0] ? item.studios[0].name : null,
-      score: item.score || null
+      score
     };
   } catch (err) {
-    console.warn('Jikan fetch failed for', title, err);
+    console.warn('Jikan fetch failed for', title, mediaType, err);
     return null;
   }
 }
@@ -62,25 +91,33 @@ function sleep(ms) {
 async function initializeCollectionFromJikan() {
   try {
     const collection = [];
+    // Combine anime and manga sample lists into a single array with media type
+    const combined = [];
+    SAMPLE_ANIME.forEach(s => combined.push({ title: typeof s === 'string' ? s : s.title, media: (typeof s === 'object' && s.media) ? s.media : 'anime' }));
+    if (typeof SAMPLE_MANGA !== 'undefined' && Array.isArray(SAMPLE_MANGA)) {
+      SAMPLE_MANGA.forEach(s => combined.push({ title: s, media: 'manga' }));
+    }
 
-    for (let i = 0; i < SAMPLE_ANIME.length; i++) {
-      const anime = SAMPLE_ANIME[i];
+    for (let i = 0; i < combined.length; i++) {
+      const entry = combined[i];
+      const title = entry.title;
+      const media = entry.media || 'anime';
       // Be polite to the API
       await sleep(350);
-      const title = typeof anime === 'string' ? anime : anime.title;
-      const base = (typeof anime === 'object' && anime) ? anime : {};
-      const info = await fetchJikanInfo(title);
+      const info = await fetchJikanInfo(title, media);
 
       const item = {
         id: Date.now().toString() + i,
         title: title,
-        type: info?.type || base.type || null,
-        status: base.status || 'Plan to Watch',
-        episodes: info?.episodes || base.episodes || null,
-        score: info?.score || base.score || null,
-        synopsis: info?.synopsis || base.synopsis || '',
-        studio: info?.studio || base.studio || 'Unknown',
-        imageUrl: info?.imageUrl || base.imageUrl || null,
+        type: info?.type || (media === 'manga' ? 'Manga' : null),
+        status: 'Plan to Watch',
+        episodes: media === 'anime' ? (info?.episodes || null) : null,
+        chapters: media === 'manga' ? (info?.chapters || null) : null,
+        score: info?.score || null,
+        synopsis: info?.synopsis || '',
+        studio: media === 'anime' ? (info?.studio || 'Unknown') : null,
+        authors: media === 'manga' ? (info?.authors || null) : null,
+        imageUrl: info?.imageUrl || null,
         dateAdded: new Date().toISOString()
       };
 
@@ -172,6 +209,6 @@ function getCollectionStats() {
 document.addEventListener('DOMContentLoaded', () => {
   const hasData = localStorage.getItem('animeCollection');
   if (!hasData && window.location.pathname.includes('index.html') || window.location.pathname === '/') {
-    console.log('💡 Tip: Run initializeCollection() in console to populate with sample data');
+    console.log('💡 Tip: Run initializeCollectionFromJikan() in console to populate with sample data');
   }
 });
