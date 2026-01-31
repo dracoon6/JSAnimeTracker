@@ -1,4 +1,5 @@
 // Collection Page Logic
+// Manages display of user's anime collection with filtering, grid layout, and detail modals
 
 let currentFilter = 'all';
 let allCollection = [];
@@ -9,11 +10,19 @@ document.addEventListener('DOMContentLoaded', () => {
     setupModal();
 });
 
+/**
+ * Retrieve and display the complete anime collection from storage
+ */
 function loadCollection() {
     allCollection = StorageManager.getCollection();
     displayCollection(allCollection);
 }
 
+/**
+ * Display anime items as a grid with cards showing title, type, status, and rating
+ * Maps collection array to HTML cards using template literals
+ * @param {Array} items - Array of anime objects to display
+ */
 function displayCollection(items) {
     const grid = document.getElementById('collectionGrid');
     
@@ -41,6 +50,10 @@ function displayCollection(items) {
     `).join('');
 }
 
+/**
+ * Attach event listeners to filter buttons for filtering by media type
+ * Uses event delegation for dynamically added buttons
+ */
 function setupFilterButtons() {
     const filterButtons = document.querySelectorAll('.filter-btn');
     
@@ -57,6 +70,10 @@ function setupFilterButtons() {
     });
 }
 
+/**
+ * Filter collection based on current filter selection (All, TV, Movie, Manga)
+ * Uses array filter() method to find matching items
+ */
 function filterCollection() {
     let filtered = allCollection;
     
@@ -67,6 +84,9 @@ function filterCollection() {
     displayCollection(filtered);
 }
 
+/**
+ * Setup modal functionality including close button and background click handlers
+ */
 function setupModal() {
     const modal = document.getElementById('detailModal');
     const closeBtn = document.querySelector('.close-btn');
@@ -77,6 +97,11 @@ function setupModal() {
     });
 }
 
+/**
+ * Open detail modal with anime information
+ * Populates modal fields with selected anime data
+ * @param {Object} item - The anime object to display details for
+ */
 function openModal(item) {
     const modal = document.getElementById('detailModal');
     
@@ -93,6 +118,9 @@ function openModal(item) {
     modal.classList.add('active');
 }
 
+/**
+ * Close the detail modal by removing active class
+ */
 function closeModal() {
     const modal = document.getElementById('detailModal');
     modal.classList.remove('active');

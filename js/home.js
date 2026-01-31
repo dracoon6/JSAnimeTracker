@@ -1,10 +1,15 @@
 // Home Page Logic
+// Displays collection statistics and top-rated anime showcase on home page
 
 document.addEventListener('DOMContentLoaded', () => {
     loadStats();
     loadSpotlight();
 });
 
+/**
+ * Load and display collection statistics including total count, watching, completed
+ * Uses StorageManager to retrieve stats and populate DOM elements
+ */
 function loadStats() {
     const stats = StorageManager.getCollectionStats();
     
@@ -20,6 +25,11 @@ function loadStats() {
     }
 }
 
+/**
+ * Load and display the top-rated anime in spotlight section
+ * Uses StorageManager.getTopRatedAnime() to find highest-rated title
+ * Displays anime details with image, synopsis, and metadata
+ */
 function loadSpotlight() {
     const topRated = StorageManager.getTopRatedAnime();
     const spotlightCard = document.getElementById('spotlightCard');

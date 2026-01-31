@@ -1,4 +1,5 @@
 // Add Page Logic
+// Handles form submission and validation for adding new anime titles to collection
 
 let submittedData = null;
 
@@ -7,6 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
     setupFormSubmission();
 });
 
+/**
+ * Load and populate form fields with pre-filled data from session storage
+ * Used when navigating from search results
+ * Includes error handling for malformed data
+ */
 function loadPrefilledData() {
     const prefilledData = sessionStorage.getItem('prefilledData');
     
@@ -23,6 +29,10 @@ function loadPrefilledData() {
     }
 }
 
+/**
+ * Attach form submission handler to the add form
+ * Prevents default form submission and handles validation
+ */
 function setupFormSubmission() {
     const form = document.getElementById('addForm');
     
@@ -32,6 +42,11 @@ function setupFormSubmission() {
     });
 }
 
+/**
+ * Collect form data, validate required fields, and add to collection
+ * Displays confirmation result and scrolls to it
+ * Throws informative error if validation fails
+ */
 function submitForm() {
     const formData = {
         title: document.getElementById('title').value,
@@ -62,6 +77,11 @@ function submitForm() {
     }, 100);
 }
 
+/**
+ * Display the submission result with confirmation message
+ * Shows the submitted anime details and hides the form
+ * Provides navigation back to collection
+ */
 function showResult() {
     const form = document.getElementById('addForm');
     const resultSection = document.getElementById('resultSection');

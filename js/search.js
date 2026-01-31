@@ -1,4 +1,5 @@
 // Search Page Logic
+// Integrates with Jikan API to search and discover anime/manga from external library
 
 let currentCategory = 'anime';
 let searchTimeout;
@@ -8,6 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setupCategoryFilters();
 });
 
+/**
+ * Setup search input with debouncing to avoid excessive API calls
+ * Triggers search when user types at least 2 characters
+ */
 function setupSearchBox() {
     const searchInput = document.getElementById('searchInput');
     
@@ -25,13 +30,17 @@ function setupSearchBox() {
         document.getElementById('searchResults').innerHTML = 
             '<div class="search-loading">Searching...</div>';
         
-        // Debounce the search
+        // Debounce the search to wait 300ms after user stops typing
         searchTimeout = setTimeout(() => {
             performSearch(query);
         }, 300);
     });
 }
 
+/**
+ * Setup category filter buttons to toggle between anime and manga search
+ * Toggles active state and updates currentCategory variable
+ */
 function setupCategoryFilters() {
     const categoryBtns = document.querySelectorAll('.category-btn');
     
@@ -49,6 +58,12 @@ function setupCategoryFilters() {
     });
 }
 
+/**
+ * Search the Jikan API (external library) for anime or manga
+ * Includes comprehensive error handling for API failures
+ * Uses async/await for clean asynchronous code
+ * @param {string} query - Search term entered by user
+ */
 async function performSearch(query) {
     try {
         const endpoint = currentCategory === 'anime' 
@@ -58,7 +73,7 @@ async function performSearch(query) {
         const response = await fetch(endpoint);
         
         if (!response.ok) {
-            throw new Error('API Error');
+            throw new Error('API Error: ' + response.status);
         }
         
         const data = await response.json();
@@ -78,6 +93,11 @@ async function performSearch(query) {
     }
 }
 
+/**
+ * Display search results as clickable cards with images
+ * Uses map() to transform API data into HTML cards
+ * @param {Array} results - Array of anime/manga objects from API
+ */
 function displaySearchResults(results) {
     const resultsContainer = document.getElementById('searchResults');
     
@@ -98,6 +118,13 @@ function displaySearchResults(results) {
     }).join('');
 }
 
+/**
+ * Add selected search result to collection by navigating to add page
+ * Stores data in sessionStorage for form pre-population
+ * @param {string} title - Title of the anime/manga
+ * @param {string} type - Type (TV, Movie, Manga)
+ * @param {string} imageUrl - URL to poster image
+ */
 function addSearchResultToCollection(title, type, imageUrl) {
     // Navigate to add page with pre-filled data
     sessionStorage.setItem('prefilledData', JSON.stringify({

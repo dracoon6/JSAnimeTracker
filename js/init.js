@@ -1,5 +1,6 @@
 // Data Initialization Script
-// This script can be run once to populate your collection with the 15 sample anime
+// Provides sample anime data and helper functions for testing and initialization
+// Call initializeCollection() in browser console to populate with 15 sample anime titles
 
 const SAMPLE_ANIME = [
   {
@@ -155,8 +156,10 @@ const SAMPLE_ANIME = [
 ];
 
 /**
- * Initialize collection with sample data
- * Call this function in browser console to populate with 15 anime
+ * Initialize collection with 15 sample anime titles
+ * Populates localStorage with predefined anime data for testing
+ * Call this function in browser console: initializeCollection()
+ * @returns {boolean} True if initialization successful, false otherwise
  */
 function initializeCollection() {
   try {
@@ -192,7 +195,9 @@ function initializeCollection() {
 }
 
 /**
- * Clear all collection data
+ * Clear all collection data from localStorage
+ * Prompts user for confirmation before deletion
+ * Removes COLLECTION, LAST_ADDED, and USER_SCORES from storage
  */
 function clearCollection() {
   if (confirm('Are you sure you want to clear your entire collection? This cannot be undone.')) {
@@ -204,7 +209,10 @@ function clearCollection() {
 }
 
 /**
- * Get collection statistics
+ * Get and display collection statistics in console
+ * Calculates stats by type, status, and average score
+ * Uses forEach and filter array methods for analysis
+ * @returns {Object|null} Statistics object or null if no collection exists
  */
 function getCollectionStats() {
   const data = localStorage.getItem('animeCollection');
